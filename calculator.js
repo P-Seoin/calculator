@@ -1,15 +1,14 @@
-const numpads = document.querySelectorAll('.numpad');
+const buttons =document.querySelectorAll('button');
+const numpad = document.querySelectorAll('.numpad');
 const operators = document.querySelectorAll('.operator');
-const allclear = document.querySelectorAll('allclear');
-const result = document.querySelectorAll('result');
-const display = document.querySelectorAll('pane');
+const display = document.querySelector('.pane');
 
 let oper = ''; // 연산자 입력
 let pre = ''; // 이전 입력 값 ,첫번째숫자
 let resent = ''; // 최근 값 , 두번째숫자
 
 // 계산 함수 만들기 caculate (pre, oper, resent) 순으로 함수 인자 받기
-let caculate = (n1, oper, n2 ) =>{ //???? 왜 function 안 쓰고 let 쓰는건지?@@@@@
+function caculate (n1, oper, n2 ) { //???? 왜 function 안 쓰고 let 쓰는건지?@@@@@
     let result = 0;
     switch(oper){ 
         case '+':
@@ -24,17 +23,16 @@ let caculate = (n1, oper, n2 ) =>{ //???? 왜 function 안 쓰고 let 쓰는건�
         case '*':
             result = Number(n1) * Number(n2); // Number 함수(문자열을 숫자로 변환해주는 함수)를 사용하여 계산
             break;
-        case '=':
-            firstdigit =true ; //결과값 반환 후 다시 첫번째자리수를 의미하는 초기화 진행
-            return String(result); // 계산한 숫자를 문자열로 리턴
-            
+        default:
+            break;
     }
+    return String(result);
 };
 
-let caculator = () =>{ // 계산 하기전 밑작업
+function caculator(){ // 계산 하기전 밑작업
      let firstdigit = true; // 첫 번째 자리 숫자 판별 변수 선언 > 나중에 구분을 위해 true=0
 
-     numpads.forEach((item) => {
+     buttons.forEach((item) => {
         item.addEventListener('click',(e)=> { //?
             let action =e.target.classList[0]; //?
             let click = e.target.innerHTML; //?
@@ -45,7 +43,7 @@ let caculator = () =>{ // 계산 하기전 밑작업
                 display.textContent=''; // 그리고 다시 디스플레이 창 초기화하고 두번째 숫자 받을 준비하기
                 firstdigit = true; // 첫번째 숫자가 입력됐다고 체크하기
             }
-            if (action === 'numpads'){
+            if (action === 'numpad'){
                 if ( firstdigit && click === '0'){ //첫번째 숫자이고 입력된 값이 0 일때
                     return; //걍 넘어감
                 }
